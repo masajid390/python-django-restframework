@@ -1,0 +1,15 @@
+.nfs*
+.tmp
+*.pyc
+*.swp
+*.box
+db.sqlite3
+npm-debug.log
+.idea/*
+venv/
+static
+test
+.DS_Store
+.coverage
+.vscode/
+*~
