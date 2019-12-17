@@ -26,13 +26,14 @@ class OrderLineOperations(OperationManager):
         :return: A Tuple with 1st item as lines and 2nd as picks
         """
         try:
-            stock_operations = StorageOperations()
-            if self.is_valid(lines_data, True, True):
-                lines, picks = [], []
-                for line_data in lines_data:
-                    line = self.create_or_update(line_data)
-                    lines.append(line.id)
-                    picks = picks + stock_operations.get_picks(line)
-                return lines, picks
+            with transaction.atomic():
+                stock_operations = StorageOperations()
+                if self.is_valid(lines_data, True, True):
+                    lines, picks = [], []
+                    for line_data in lines_data:
+                        line = self.create_or_update(line_data)
+                        lines.append(line.id)
+                        picks = picks + stock_operations.get_picks(line)
+                    return lines, picks
         except Exception as ex:
             raise ex
